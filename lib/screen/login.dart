@@ -3,8 +3,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wayne/utils/routes.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String name = "";
+  bool changeButton = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +31,8 @@ class LoginPage extends StatelessWidget {
               //   alignment: const Alignment(0, -0.7),
               // ),
               SizedBox(height: 20),
-              const Text(
-                "Welcome To Tech Wizard",
+              Text(
+                "Welcome $name",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -39,23 +47,61 @@ class LoginPage extends StatelessWidget {
                     TextFormField(
                       decoration: const InputDecoration(
                           hintText: "Enter Username", labelText: "Username"),
+                      onChanged: (value) {
+                        name = value;
+                        setState(() {});
+                      },
                     ),
                     TextFormField(
                       obscureText: true,
                       decoration: const InputDecoration(
                           hintText: "Enter Paasword", labelText: "Password"),
                     ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 72, 92, 221),
-                        minimumSize: Size(150, 40),
-                      ), // Background color
-                      onPressed: () {
+                    SizedBox(height: 40),
+                    InkWell(
+                      onTap: () async {
+                        setState(() {
+                          changeButton = true;
+                        });
+                        await Future.delayed(Duration(milliseconds: 1400));
                         Navigator.pushNamed(context, MyRoutes.homeRoute);
                       },
-                      child: Text("Login"),
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 300),
+                        width: changeButton ? 50 : 150,
+                        height: 50,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 72, 92, 221),
+                            // shape: changeButton
+                            //     ? BoxShape.circle
+                            //     : BoxShape.rectangle,
+                            borderRadius:
+                                BorderRadius.circular(changeButton ? 50 : 8)),
+                        child: changeButton
+                            ? Icon(
+                                Icons.done,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              )
+                            : Text(
+                                "Login",
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  fontSize: 17,
+                                ),
+                              ),
+                      ),
                     ),
+                    // ElevatedButton(
+                    //   style: ElevatedButton.styleFrom(
+                    //     backgroundColor: Color.fromARGB(255, 72, 92, 221),
+                    //     minimumSize: Size(150, 40),
+                    //   ), // Background color
+                    //   onPressed: () {
+                    //     Navigator.pushNamed(context, MyRoutes.homeRoute);
+                    //   },
+                    //   child: Text("Login"),
+                    // ),
                   ],
                 ),
               )
