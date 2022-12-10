@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wayne/utils/routes.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -13,7 +14,7 @@ class LoginPage extends StatelessWidget {
           title: const Text("Login"),
           backgroundColor: const Color(0xff222527),
         ),
-        body: Center(
+        body: SingleChildScrollView(
           child: Column(
             children: [
               Image.asset("assets/images/login.png"),
@@ -47,9 +48,12 @@ class LoginPage extends StatelessWidget {
                     SizedBox(height: 20),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(
-                              255, 72, 92, 221)), // Background color
-                      onPressed: () {},
+                        backgroundColor: Color.fromARGB(255, 72, 92, 221),
+                        minimumSize: Size(150, 40),
+                      ), // Background color
+                      onPressed: () {
+                        Navigator.pushNamed(context, MyRoutes.homeRoute);
+                      },
                       child: Text("Login"),
                     ),
                   ],
