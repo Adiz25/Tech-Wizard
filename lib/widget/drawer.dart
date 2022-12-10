@@ -59,7 +59,7 @@ class MyDrawer extends StatelessWidget {
                 color: Color.fromARGB(234, 27, 27, 27),
               ),
               title: Text(
-                "contact",
+                "Contact us",
                 textScaleFactor: 1.5,
                 style: TextStyle(color: Color.fromARGB(234, 27, 27, 27)),
               ),
