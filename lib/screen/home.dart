@@ -44,12 +44,42 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: (CatalogModel.items != null && CatalogModel.items!.isNotEmpty)
-            ? ListView.builder(
+            ? GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
+                ),
+                itemBuilder: (context, index) {
+                  final item = CatalogModel.items![index];
+                  return Card(
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: GridTile(
+                          header: Container(
+                            child: Text(
+                              item.name,
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                            decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 69, 18, 235)),
+                            padding: const EdgeInsets.all(12),
+                          ),
+                          footer: Container(
+                            child: Text(
+                              item.price.toString(),
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                            decoration: BoxDecoration(color: Color(0xff222527)),
+                            padding: const EdgeInsets.all(12),
+                          ),
+                          child: Image.network(item.image)));
+                },
                 itemCount: CatalogModel.items!.length,
-                itemBuilder: (context, index) => // here we are Optimising LOC
-                    ItemWidget(
-                      item: CatalogModel.items![index],
-                    ))
+              )
             : Center(
                 child: CircularProgressIndicator(),
               ),
