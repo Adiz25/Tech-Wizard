@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                             child: Text(
                               item.price.toString(),
                               style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255)),
+                                  color: Color.fromARGB(255, 238, 238, 238)),
                             ),
                             decoration: BoxDecoration(color: Color(0xff222527)),
                             padding: const EdgeInsets.all(12),
