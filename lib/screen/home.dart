@@ -1,12 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:wayne/models/catalog.dart';
 import 'package:wayne/widget/drawer.dart';
+import 'dart:convert';
 import 'package:wayne/widget/item_widget.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final String name = "Aditya";
-  final dummyList = List.generate(20, (index) => CatalogModel.items[0]);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    lodeData();
+  }
+
+  lodeData() async {
+    await Future.delayed(Duration(seconds: 2));
+    const JsonDecoder decoder = JsonDecoder();
+    final catalogJson =
+        await rootBundle.loadString("assets/files/catalog.json");
+    // var decodedData = JsonDecoder(catalogJson);
+    final Map<String, dynamic> decodedData = decoder.convert(catalogJson);
+    var productData = decodedData["products"];
+    CatalogModel.items =
+        List.from(productData).map<Item>((item) => Item.fromMap(item)).toList();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,16 +43,16 @@ class HomePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: ListView.builder(
-          //itemCount: CatalogModel.items.length,
-          itemCount: dummyList.length,
-          itemBuilder: (context, index) {
-            return ItemWidget(
-              //item: CatalogModel.items[index],
-              item: dummyList[index],
-            );
-          },
-        ),
+        child: (CatalogModel.items != null && CatalogModel.items!.isNotEmpty)
+            ? ListView.builder(
+                itemCount: CatalogModel.items!.length,
+                itemBuilder: (context, index) => // here we are Optimising LOC
+                    ItemWidget(
+                      item: CatalogModel.items![index],
+                    ))
+            : Center(
+                child: CircularProgressIndicator(),
+              ),
       ),
       drawer: MyDrawer(),
     );
