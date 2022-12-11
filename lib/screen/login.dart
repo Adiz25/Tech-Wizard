@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   moveToHome(BuildContext context) async {
     if (_fromKey.currentState!.validate()) {
       setState(() {
+        _showToast(context);
         changeButton = true;
       });
       await Future.delayed(Duration(milliseconds: 1400));
@@ -28,13 +29,23 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  void _showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('You are Loged in..'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color.fromRGBO(255, 255, 255, 1),
         appBar: AppBar(
           title: const Text("Login"),
-          backgroundColor: const Color(0xff222527),
         ),
         body: SingleChildScrollView(
           child: Form(

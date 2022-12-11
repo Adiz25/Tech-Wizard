@@ -1,8 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wayne/utils/routes.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
+
+  moveToLogin(BuildContext context) async {
+    await Future.delayed(Duration(milliseconds: 1400));
+    Navigator.pushNamed(context, MyRoutes.loginRoute);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +69,18 @@ class MyDrawer extends StatelessWidget {
                 textScaleFactor: 1.5,
                 style: TextStyle(color: Color.fromARGB(234, 27, 27, 27)),
               ),
+            ),
+            ListTile(
+              leading: Icon(
+                CupertinoIcons.lock,
+                color: Color.fromARGB(234, 27, 27, 27),
+              ),
+              title: Text(
+                "Logout",
+                textScaleFactor: 1.5,
+                style: TextStyle(color: Color.fromARGB(234, 27, 27, 27)),
+              ),
+              onTap: () => moveToLogin(context),
             ),
           ],
         ),

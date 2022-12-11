@@ -38,6 +38,7 @@ dependencies:
   update: ^0.3.1
   flutter_svg: ^1.1.6
   google_fonts: ^3.0.1
+  fluttertoast: ^8.1.1
 
 dev_dependencies:
   flutter_test:
